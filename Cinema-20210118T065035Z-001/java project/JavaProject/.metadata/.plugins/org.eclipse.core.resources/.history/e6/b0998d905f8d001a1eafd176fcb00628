@@ -1,0 +1,38 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+
+@SuppressWarnings("serial")
+public class PopUpMenu extends JPopupMenu {
+	
+	private JMenuItem delItem = new JMenuItem("Изтриване");
+	private JMenuItem editItem = new JMenuItem("Редактиране");
+	private int id;
+	
+	public PopUpMenu(int id) {
+		this.add(delItem);
+		this.add(editItem);
+		delItem.addActionListener(new DeleteAction());
+		editItem.addActionListener(new EditAction());
+		this.id = id;
+	}
+	
+	class EditAction implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			DBConnector.updateRow("clients", id);			
+		}
+		
+	}
+	class DeleteAction implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			DBConnector.deleteRow("clients_media", id);			
+		}
+		
+	}
+
+}
+
